@@ -74,10 +74,10 @@ rule nextclade_sort:
         minimizer="results/influenza_segments.minimizer.json",
         data="results/ncbi_dataset/data/genomic.fna"
     output:
-        results="results/sort_results.tsv"
+        results="results/sort_results.tsv",
     shell:
         """
-        nextclade sort -m {input.minimizer} -r {output.results}  {input.data} --max-score-gap 0.5 --min-score 0.05 --min-hits 1  --all-matches
+        nextclade sort -m {input.minimizer} -r {output.results}  {input.data} --max-score-gap 0.3 --min-score 0.1 --min-hits 2  --all-matches
         """
 
 rule parse_nextclade_output:
@@ -85,7 +85,8 @@ rule parse_nextclade_output:
         results="results/sort_results.tsv",
         data="results/ncbi_dataset/data/genomic.fna"
     output:
-        parsed=expand("results/segment_{segment}.fasta", segment=SEGMENTS)
+        parsed=expand("results/segment_{segment}.fasta", segment=SEGMENTS),
+        results="results/nextclade_sort.tsv"
     shell:
         """
         python scripts/parse_nextclade_sort_output.py \
@@ -93,29 +94,21 @@ rule parse_nextclade_output:
             --sequences {input.data} \
         """
 
-# for i in {1..8}; do   
-# seqkit sample -n 1000 --out-file ../results/sample_segment_${i}.fasta ../results/segment_${i}.fasta
-# augur align --sequences ../results/sample_segment_${i}.fasta --output ../results/segment_${i}_aligned.fasta 
-# augur tree --alignment ../results/segment_${i}_aligned.fasta --output ../results/segment_${i}.nwk 
-# augur refine --tree ../results/segment_${i}.nwk --output-tree ../results/segment_${i}_refined.nwk  
-# augur traits --tree ../results/segment_${i}_refined.nwk \
-#             --metadata ../results/nextclade_sort.tsv \
-#             --output-node-data ../results/segment${i}_traits.json \
-#             --columns "inferredSegment inferredSubType ncbiSegment ncbiSubtype" \
-#             --metadata-id-columns seqName 
-# augur export v2 \
-#             --tree ../results/segment_${i}_refined.nwk \
-#             --metadata ../results/nextclade_sort.tsv \
-#             --node-data ../results/segment${i}_traits.json \
-#             --output ../results/segment${i}_auspice.json \
-#             --metadata-id-columns "seqName"  --auspice-config auspice_config.json
-# done 
+rule subsample_segments:
+    input:
+        fasta="results/segment_{segment}.fasta"
+    output:
+        subsampled_fasta="results/segments/sample_segment_{segment}.fasta"
+    shell:
+        """
+        seqkit sample -n 5000 -2 --out-file {output.subsampled_fasta} {input.fasta}
+        """
 
 rule align_segments:
     input:
-        reference_genome="results/segments/output_segment{segment}.fasta"
+        reference_genome="results/segments/sample_segment_{segment}.fasta"
     output:
-        aligned_fasta="results/segments/aligned_segment{segment}.fasta"
+        aligned_fasta="results/segments/aligned_segment_{segment}.fasta"
     shell:
         """
         augur align --sequences {input.reference_genome} --output {output.aligned_fasta}
@@ -123,7 +116,7 @@ rule align_segments:
 
 rule segment_trees:
     input:
-        reference_genome="results/segments/aligned_segment{segment}.fasta"
+        reference_genome="results/segments/aligned_segment_{segment}.fasta"
     output:
         tree="results/segments/tree{segment}.nwk"
     shell:
@@ -132,6 +125,47 @@ rule segment_trees:
              --output {output.tree}
         """
 
+rule refine_trees:
+    input:
+        tree="results/segments/tree{segment}.nwk"
+    output:
+        refined_tree="results/segments/refined_tree{segment}.nwk"
+    shell:
+        """
+        augur refine --tree {input.tree} --output-tree {output.refined_tree}
+        """
+
+rule traits:    
+    input:
+        tree="results/segments/refined_tree{segment}.nwk",
+        metadata="results/nextclade_sort.tsv"
+    output:
+        traits="results/segments/traits{segment}.json"
+    shell:
+        """
+        augur traits --tree {input.tree} --metadata {input.metadata} \
+            --output-node-data {output.traits} \
+            --columns "inferredSegment inferredSubType ncbiSegment ncbiSubTypeNA ncbiSubTypeHA" \
+            --metadata-id-columns seqName
+        """
+
+rule export:
+    input:
+        tree="results/segments/refined_tree{segment}.nwk",
+        metadata="results/nextclade_sort.tsv",
+        traits="results/segments/traits{segment}.json"
+    output:
+        auspice_json="auspice/auspice{segment}.json"
+    shell:
+        """
+        augur export v2 \
+            --tree {input.tree} \
+            --metadata {input.metadata} \
+            --node-data {input.traits} \
+            --output {output.auspice_json} \
+            --metadata-id-columns "seqName"  --auspice-config auspice_config.json
+        """    
+
 rule all_trees:
     input:
-        expand("results/segments/tree{segment}.nwk", segment=SEGMENTS)
+        expand("auspice/auspice{segment}.json", segment=SEGMENTS)

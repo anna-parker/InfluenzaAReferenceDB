@@ -10,6 +10,20 @@ def extract_subtype(seq_name):
     match = re.search(pattern, seq_name)
     return match.group(0) if match else np.nan
 
+def extract_subtypeNA(seq_name):
+    if extract_subtype(seq_name):
+        pattern = r"N([1-9]|1[0-2])"
+        match = re.search(pattern, seq_name)
+        return match.group(0) if match else np.nan
+    return np.nan
+
+def extract_subtypeHA(seq_name):
+    if extract_subtype(seq_name):
+        pattern = r"H([1-9]|1[0-8])"
+        match = re.search(pattern, seq_name)
+        return match.group(0) if match else np.nan
+    return np.nan
+
 
 def extract_segment(seq_name):
     pattern = r"segment ([1-8])"
@@ -48,19 +62,22 @@ def parse_file(sort_results, sequences):
     df_sorted = df.sort_values(["index", "score"], ascending=[True, False])
     df_highest_per_group = df_sorted.drop_duplicates(subset="index", keep="first")
 
-    df_highest_per_group["ncbiSubType"] = df_highest_per_group["seqName"].apply(
-        extract_subtype
+    df_highest_per_group.loc[:, "ncbiSubTypeNA"] = df_highest_per_group["seqName"].apply(
+        extract_subtypeNA
     )
-    df_highest_per_group["ncbiSegment"] = df_highest_per_group["seqName"].apply(
+    df_highest_per_group.loc[:, "ncbiSubTypeHA"] = df_highest_per_group["seqName"].apply(
+        extract_subtypeHA
+    )
+    df_highest_per_group.loc[:, "ncbiSegment"] = df_highest_per_group["seqName"].apply(
         extract_segment
     )
-    df_highest_per_group["seqName"] = df_highest_per_group["seqName"].apply(
+    df_highest_per_group.loc[:, "seqName"] = df_highest_per_group["seqName"].apply(
         extract_accession
     )
-    df_highest_per_group["inferredSubType"] = df_highest_per_group["dataset"].apply(
+    df_highest_per_group.loc[:, "inferredSubType"] = df_highest_per_group["dataset"].apply(
         extract_computed_subtype
     )
-    df_highest_per_group["inferredSegment"] = df_highest_per_group["dataset"].apply(
+    df_highest_per_group.loc[:, "inferredSegment"] = df_highest_per_group["dataset"].apply(
         extract_computed_segment
     )
     df_highest_per_group.drop(columns="dataset", inplace=True)
