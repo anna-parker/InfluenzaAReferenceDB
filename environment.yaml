@@ -1,0 +1,15 @@
+name: influenza-db
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python
+  - biopython
+  - nextclade
+  - pip
+  - PyYAML
+  - python-dateutil
+  - snakemake
+  - ncbi-datasets-cli >=16.33.0
+  - augur
+  - click

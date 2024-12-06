@@ -1,3 +1,4 @@
+## This is a copy of https://github.com/nextstrain/nextclade_data/blob/master/scripts/lib/minimizer.py
 import copy
 
 import numpy as np

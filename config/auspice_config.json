@@ -1,0 +1,47 @@
+{
+  "title": "Influenza A",
+  "maintainers": [
+    {
+      "name": "Anna Parker"
+    }
+  ],
+  "build_url": "https://github.com/anna-parker/InfluenzaAReferenceDB",
+  "colorings": [
+    {
+      "key": "ncbiSubTypeNA",
+      "title": "ncbiSubTypeNA",
+      "type": "categorical"
+    },
+    {
+      "key": "ncbiSubTypeHA",
+      "title": "ncbiSubTypeHA",
+      "type": "categorical"
+    },
+    {
+      "key": "ncbiSegment",
+      "title": "ncbiSegment",
+      "type": "categorical"
+    },
+    {
+      "key": "inferredSubType",
+      "title": "inferredSubType",
+      "type": "categorical"
+    },
+    {
+      "key": "inferredSegment",
+      "title": "inferredSegment",
+      "type": "categorical"
+    }
+  ],
+  "panels": [
+    "tree",
+    "entropy"
+  ],
+  "filters": [
+    "inferredSegment",
+    "inferredSubType",
+    "ncbiSegment",
+    "ncbiSubTypeHA",
+    "ncbiSubTypeNA"
+  ]
+}

@@ -2,26 +2,49 @@ TAXON_ID = 11320
 SEGMENTS = range(1, 9)
 
 
-rule fetch_refseq_assembly_package:
+rule fetch_ncbi_dataset_package:
     output:
-        dataset_package="assemblies/refseq_assembly.zip",
+        dataset_package="data/ncbi_dataset.zip",
     shell:
         """
-        datasets download genome taxon {TAXON_ID} \
-            --assembly-source refseq \
+        datasets download virus genome taxon {TAXON_ID} \
             --no-progressbar \
             --filename {output.dataset_package} \
         """
 
-rule fetch_ncbi_assembly_package:
+
+rule extract_ncbi_dataset_sequences:
+    input:
+        dataset_package=rules.fetch_ncbi_dataset_package.output.dataset_package,
     output:
-        dataset_package="assemblies/genbank_assembly.zip",
+        ncbi_dataset_sequences="results/ncbi_dataset/data/genomic.fna",
     shell:
         """
-        datasets download genome taxon {TAXON_ID} \
-            --assembly-source genbank \
-            --filename {output.dataset_package} --released-after 01/01/2020
+        {params.unzip} -o {input.dataset_package} -d results
         """
+
+
+# Downloading the assemblies is taking too long - so I use a different approach
+# rule fetch_refseq_assembly_package:
+#     output:
+#         dataset_package="assemblies/refseq_assembly.zip",
+#     shell:
+#         """
+#         datasets download genome taxon {TAXON_ID} \
+#             --assembly-source refseq \
+#             --no-progressbar \
+#             --filename {output.dataset_package} \
+#         """
+
+# rule fetch_ncbi_assembly_package:
+#     output:
+#         dataset_package="assemblies/genbank_assembly.zip",
+#     shell:
+#         """
+#         datasets download genome taxon {TAXON_ID} \
+#             --assembly-source genbank \
+#             --filename {output.dataset_package} --released-after 01/01/2020
+#         """
 
 # rule extract_references:
 #     input:
@@ -47,7 +70,7 @@ rule fetch_ncbi_assembly_package:
 
 rule download_references:
     input:
-        config="config.yaml"
+        config="config/config.yaml"
     output:
         reference_genome="results/references.fasta",
     shell:
@@ -153,7 +176,8 @@ rule export:
     input:
         tree="results/segments/refined_tree{segment}.nwk",
         metadata="results/nextclade_sort.tsv",
-        traits="results/segments/traits{segment}.json"
+        traits="results/segments/traits{segment}.json",
+        auspice_config="config/auspice_config.json"
     output:
         auspice_json="auspice/auspice{segment}.json"
     shell:
@@ -163,7 +187,8 @@ rule export:
             --metadata {input.metadata} \
             --node-data {input.traits} \
             --output {output.auspice_json} \
-            --metadata-id-columns "seqName"  --auspice-config auspice_config.json
+            --metadata-id-columns "seqName"  \
+            --auspice-config {input.auspice_config}
         """    
 
 rule all_trees:

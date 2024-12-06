@@ -1,0 +1,55 @@
+HA_subtype_mapping: # As defined in https://pmc.ncbi.nlm.nih.gov/articles/PMC8227752/#app1-pathogens-10-00669
+  H1: U08903.1
+  H2: CY005413.1
+  H3: CY005943.1
+  H4: CY004925.1
+  H5: EU636692.1
+  H6: CY014623.1
+  H7: CY077420.1
+  H8: CY014659.1
+  H9: CY005990.1
+  H10: CY005997.1
+  H11: CY017765.1
+  H12: CY079894.1
+  H13: CY005914.1
+  H14: KJ195668.1
+  H15: CY006033.1
+  H16: CY005933.1
+  H17: CY103876.1
+  H18: MH682203.1
+  FluB_HA: DQ792897.1
+  FluC_HEF: NC_006310.2
+  FluD_HEF: MT636473.1
+
+NA_subtype_mapping: # Based on https://pubmed.ncbi.nlm.nih.gov/24960271/ - with only one reference for N1 and N2
+  N2: CY121026.1 
+  N2_H9N2: NC_004909.1
+  N1: HM006761.1
+  N3: EU258945.1  
+  N4: CY064796.1 
+  N5: CY060392.1 
+  N6: EU429790.1 
+  N7: CY094767.1 
+  N8: KJ406552.1 # replaced with NIH
+  N9: CY181563.1 # replaced with NIH 
+  N10: CY103894.1 
+  N11: CY125947.1 
+
+other_segments:
+  H1N1_seg1: "NC_026438.1"
+  H1N1_seg2: "NC_026435.1"
+  H1N1_seg3: "NC_026437.1"
+  # seg4: "NC_026433.1" # HA
+  H1N1_seg5: "NC_026436.1"
+  # seg6: "NC_026434.1" # NA
+  H1N1_seg7: "NC_026431.1"
+  H1N1_seg8: "NC_026432.1"
+  H3N2_seg1: "NC_007373.1"
+  H3N2_seg2: "NC_007372.1"
+  H3N2_seg3: "NC_007371.1"
+  # H3N2_seg4: "NC_007366.1"
+  H3N2_seg5: "NC_007369.1"
+  # H3N2_seg6: "NC_007368.1"
+  H3N2_seg7: "NC_007367.1"
+  H3N2_seg8: "NC_007370.1"
+
