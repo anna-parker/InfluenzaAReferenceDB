@@ -11,11 +11,11 @@ __Abdulrahman DA, Meng X, Veit M. S-Acylation of Proteins of Coronavirus and Inf
 
 For NA I used a combination of
 __Wohlbold TJ, Krammer F. In the shadow of hemagglutinin: a growing interest in influenza viral neuraminidase and its role as a vaccine antigen. Viruses. 2014 Jun 23;6(6):2465-94__ [link](https://pubmed.ncbi.nlm.nih.gov/24960271/) and __Jang YH, Seong BL. The Quest for a Truly Universal Influenza Vaccine. Front Cell Infect Microbiol. 2019 Oct 10;9:344.__ [link](https://pubmed.ncbi.nlm.nih.gov/31649895/). Wohlbold et al. supply a long list of NA reference segments and I use the visualization aid in Jang et al.'s paper to condense the set. Specifically 
-I use only two of the listed N2 references, choosing two N2 references from each subcluster found by Jang et al., and I chose a H5N1-N1 reference that is the center of the N1 cluster. 
+I use only two of the listed N2 references, choosing two N2 references from each subcluster found by Jang et al., and I chose the H5N1-N1 reference that was the center of the N1 cluster for the N1 reference. 
 
-I was initially uncertain which references to use for the other segments, so I first used the full reference assembly for the subtypes H5N1, H1N1, H2N2, H3N2, H7N9 and H9N2 to see the diversity of the other segments. Here I also see some visual clades, normally there are about three larger clades corresponding to the reference sequences from H5N1, H1N1 and H3N2 - which I chose to use in my minimizer index to improve hits.
+I was initially uncertain which references to use for the other segments, so I first used the full reference assembly for the subtypes H5N1, H1N1, H2N2, H3N2, H7N9 and H9N2 to see the diversity of the other segments. Here I also see some visual clades, normally there are about three larger clades corresponding to the reference sequences from H5N1, H1N1 and H3N2 - which I chose to use in my minimizer index to improve hits (these trees can be viewed in the pre-work folder).
 
-I then create auspice trees using a subsample of the annotated segments for a visual verification. I additionally plot the NCBI assigned reference if it was contained in the sequence description in a parsable format. From visual inspection my annotation appears to be significantly better than the available NCBI annotations for the NA segment and comparable for the HA segment.
+I then created auspice trees using a subsample of the annotated segments for a visual verification. I additionally annotated trees with the NCBI assigned subtype (`ncbiSubTypeHA` and `ncbiSubTypeNA`) if it was contained in the sequence description in a parsable format. From visual inspection my annotation appears to be significantly better than the available NCBI annotations for the NA segment and HA segment.
 
 ### Running the analysis
 
