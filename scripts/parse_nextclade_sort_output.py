@@ -37,12 +37,12 @@ def extract_accession(seq_name):
 
 def extract_computed_subtype(dataset):
     if extract_computed_segment(dataset) in ["seg4", "seg6"]:
-        return dataset.split("_")[0] if len(dataset.split("_")) > 1 else np.nan
+        return dataset.split("_")[1] if len(dataset.split("_")) > 1 else np.nan
     return np.nan
 
 
 def extract_computed_segment(dataset):
-    return dataset.split("_")[-1]
+    return dataset.split("_")[0]
 
 
 def parse_file(sort_results, sequences):

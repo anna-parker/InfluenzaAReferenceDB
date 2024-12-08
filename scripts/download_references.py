@@ -8,9 +8,7 @@ Entrez.email = "your_email@example.com"
 
 @dataclass
 class SubTypes:
-    NA_subtype_mapping: dict[str, str]
-    HA_subtype_mapping: dict[str, str]
-    other_segments: dict[str, str]
+    references: dict[str, str]
 
 
 
@@ -18,15 +16,7 @@ def download_references(subtypes, segment_file):
 
     # Fetch the sequence in FASTA format
     with open(segment_file, "w", encoding="utf-8") as output_file:
-        for name, accession in subtypes.HA_subtype_mapping.items():
-            with Entrez.efetch(db="nucleotide", id=accession, rettype="fasta", retmode="text") as handle:
-                record = SeqIO.read(handle, "fasta")
-                output_file.write(f">{name}_seg4\n{record.seq}\n")
-        for name, accession in subtypes.NA_subtype_mapping.items():
-            with Entrez.efetch(db="nucleotide", id=accession, rettype="fasta", retmode="text") as handle:
-                record = SeqIO.read(handle, "fasta")
-                output_file.write(f">{name}_seg6\n{record.seq}\n")
-        for name, accession in subtypes.other_segments.items():
+        for name, accession in subtypes.references.items():
             with Entrez.efetch(db="nucleotide", id=accession, rettype="fasta", retmode="text") as handle:
                 record = SeqIO.read(handle, "fasta")
                 output_file.write(f">{name}\n{record.seq}\n")
