@@ -106,13 +106,14 @@ rule nextclade_sort:
 rule parse_nextclade_output:
     input:
         results="results/sort_results.tsv",
-        data="results/ncbi_dataset/data/genomic.fna"
+        data="results/ncbi_dataset/data/genomic.fna",
+        script="scripts/parse_nextclade_sort_output.py"
     output:
         parsed=expand("results/segment_{segment}.fasta", segment=SEGMENTS),
         results="results/nextclade_sort.tsv"
     shell:
         """
-        python scripts/parse_nextclade_sort_output.py \
+        python {input.script} \
             --sort-results {input.results} \
             --sequences {input.data} \
         """

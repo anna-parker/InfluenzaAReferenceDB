@@ -6,22 +6,22 @@ import click
 
 
 def extract_subtype(seq_name):
-    pattern = r"\bH([1-9]|1[0-8])N([1-9]|1[0-2])\b"  # Match H1-18 and N1-12
+    pattern = r"\(H([1-9]|1[0-8])N([1-9]|1[0-2])\)"  # Match H1-18 and N1-12
     match = re.search(pattern, seq_name)
-    return match.group(0) if match else np.nan
+    return match.group(0) if match else None
 
 def extract_subtypeNA(seq_name):
     if extract_subtype(seq_name):
-        pattern = r"N([1-9]|1[0-2])"
-        match = re.search(pattern, seq_name)
-        return match.group(0) if match else np.nan
+        pattern = r"N([1-9]|1[0-2])\)"
+        match = re.search(pattern, extract_subtype(seq_name))
+        return match.group(0)[:-1] if match else np.nan
     return np.nan
 
 def extract_subtypeHA(seq_name):
     if extract_subtype(seq_name):
-        pattern = r"H([1-9]|1[0-8])"
-        match = re.search(pattern, seq_name)
-        return match.group(0) if match else np.nan
+        pattern = r"H([1-9]|1[0-8])N"
+        match = re.search(pattern, extract_subtype(seq_name))
+        return match.group(0)[:-1] if match else np.nan
     return np.nan
 
 
