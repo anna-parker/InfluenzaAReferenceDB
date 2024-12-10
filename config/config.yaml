@@ -48,4 +48,12 @@ references:
   # seg6__H3N2: "NC_007368.1"
   seg7__H3N2: "NC_007367.1"
   seg8__H3N2: "NC_007370.1"
+  seg1__H5N1: NC_007357.1
+  seg2__H5N1: NC_007358.1
+  seg3__H5N1: NC_007359.1
+  # seg4__H5N1: NC_007362.1
+  seg5__H5N1: NC_007360.1
+  # seg6__H5N1: NC_007361.1
+  seg7__H5N1: NC_007363.1
+  seg8__H5N1: NC_007364.1
 
