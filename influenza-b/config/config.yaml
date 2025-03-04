@@ -1,33 +1,25 @@
 references:
-  # seg1_vic: NC_002204.1
-  # seg2_vic: NC_002205.1
-  # seg3_vic: NC_002206.1
-  # seg4_vic: NC_002207.1
-  # seg5_vic: NC_002208.1
-  # seg6_vic: NC_002209.1
-  # seg7_vic: NC_002210.1
-  # seg8_vic: NC_002211.1
-  seg1_vic: CY115157.1
-  seg2_vic: CY115158.1
-  seg3_vic: CY115156.1
+  seg1__40: NC_002204.1  # 1940 reference before lineage split
+  seg2__40: NC_002205.1
+  seg3__40: NC_002206.1
+  seg4__40: NC_002207.1
+  seg5__40: NC_002208.1
+  seg6__40: NC_002209.1
+  seg7__40: NC_002210.1
+  seg8__40: NC_002211.1
+  seg1__vic: CY115157.1
+  seg2__vic: CY115158.1
+  seg3__vic: CY115156.1
   seg4_vic: KX058884.1
-  seg5_vic: CY115154.1
-  seg6_vic: CY073894.1
-  seg7_vic: CY115152.1
-  seg8_vic: CY115155.1
-  seg1_yam_2010: CY115189.1
-  seg2_yam_2010: CY115190.1
-  seg3_yam_2010: CY115188.1
-  seg4_yam_2010: CY115183.1  # same as JN993010.1 without the first AAA
-  seg5_yam_2010: CY115186.1
-  seg6_yam_2010: CY115185.1
-  seg7_yam_2010: CY115184.1
-  seg8_yam_2010: CY115187.1
-  # seg4_yam_1988: CY018765.1
-  # seg7_yam_1988: CY018766.1
-  # seg6_yam_1988: CY018767.1
-  # seg5_yam_1988: CY018768.1
-  # seg8_yam_1988: CY018769.1
-  # seg3_yam_1988: CY018770.1
-  # seg1_yam_1988: CY018771.1
-  # seg2_yam_1988: CY018772.1
+  seg5__vic: CY115154.1
+  seg6__vic: CY073894.1
+  seg7__vic: CY115152.1
+  seg8__vic: CY115155.1
+  seg1__yam: CY115189.1
+  seg2__yam: CY115190.1
+  seg3__yam: CY115188.1
+  seg4_yam: CY115183.1  # same as JN993010.1 without the first AAA
+  seg5__yam: CY115186.1
+  seg6__yam: CY115185.1
+  seg7__yam: CY115184.1
+  seg8__yam: CY115187.1
