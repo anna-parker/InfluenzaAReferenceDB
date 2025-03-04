@@ -21,7 +21,7 @@ I then created auspice trees using a subsample of the annotated segments for a v
 
 You can rerun the analysis using:
 ```
-micromamba create -f environment.yml
+micromamba create -f environment.yaml
 micromamba activate influenza-db
 snakemake all_trees
 ```

@@ -40,6 +40,11 @@ def extract_computed_subtype(dataset):
         return dataset.split("_")[1] if len(dataset.split("_")) > 1 else np.nan
     return np.nan
 
+def extract_computed_annotation(dataset):
+    if extract_computed_segment(dataset) not in ["seg4", "seg6"]:
+        return dataset.split("_")[2] if len(dataset.split("_")) > 2 else np.nan
+    return np.nan
+
 
 def extract_computed_segment(dataset):
     return dataset.split("_")[0]
@@ -79,6 +84,9 @@ def parse_file(sort_results, sequences):
     )
     df_highest_per_group.loc[:, "inferredSegment"] = df_highest_per_group["dataset"].apply(
         extract_computed_segment
+    )
+    df_highest_per_group.loc[:, "annotation"] = df_highest_per_group["dataset"].apply(
+        extract_computed_annotation
     )
     df_highest_per_group.drop(columns="dataset", inplace=True)
 

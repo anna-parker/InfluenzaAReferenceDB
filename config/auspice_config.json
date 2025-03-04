@@ -31,6 +31,11 @@
       "key": "inferredSegment",
       "title": "inferredSegment",
       "type": "categorical"
+    },
+    {
+      "key": "annotation",
+      "title": "annotation",
+      "type": "categorical"
     }
   ],
   "panels": [
@@ -42,6 +47,7 @@
     "inferredSubType",
     "ncbiSegment",
     "ncbiSubTypeHA",
-    "ncbiSubTypeNA"
+    "ncbiSubTypeNA",
+    "annotation"
   ]
 }

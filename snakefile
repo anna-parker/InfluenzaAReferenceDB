@@ -1,6 +1,13 @@
 TAXON_ID = 11320
 SEGMENTS = range(1, 9)
 
+if os.uname().sysname == "Darwin":
+    # Don't use conda-forge unzip on macOS
+    # Due to https://github.com/conda-forge/unzip-feedstock/issues/16
+    unzip = "/usr/bin/unzip"
+else:
+    unzip = "unzip"
+
 
 rule fetch_ncbi_dataset_package:
     output:
@@ -18,6 +25,8 @@ rule extract_ncbi_dataset_sequences:
         dataset_package=rules.fetch_ncbi_dataset_package.output.dataset_package,
     output:
         ncbi_dataset_sequences="results/ncbi_dataset/data/genomic.fna",
+    params:
+        unzip=unzip,
     shell:
         """
         {params.unzip} -o {input.dataset_package} -d results
@@ -169,7 +178,7 @@ rule traits:
         """
         augur traits --tree {input.tree} --metadata {input.metadata} \
             --output-node-data {output.traits} \
-            --columns "inferredSegment inferredSubType ncbiSegment ncbiSubTypeNA ncbiSubTypeHA" \
+            --columns "inferredSegment inferredSubType ncbiSegment ncbiSubTypeNA ncbiSubTypeHA annotation" \
             --metadata-id-columns seqName
         """
 
